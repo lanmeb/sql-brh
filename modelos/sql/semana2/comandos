@@ -18,13 +18,23 @@ INSERT INTO brh.atribuicao (projeto, colaborador, papel) VALUES (9, 'A001', 8);
 *****************************************
 -- Relatório de Departamentos
 *****************************************
-SELECT * from brh.departamento
+SELECT * 
+from brh.departamento
 order by brh.departamento.nome
+
+*****************************************
+-- Relatório de Departamentos
+*****************************************
+select * 
+from brh.colaborador
+where cep = '71777-700'
+and departamento in ('SECAP', 'SESEG')
 
 *****************************************
 -- Excluir departamento SECAP
 *****************************************
-delete from brh.departamento where sigla = 'SECAP';
+delete from brh.departamento
+where sigla = 'SECAP';
 
 ****************************
 -- Relatório de contatos
@@ -84,5 +94,39 @@ on brh.c.matricula = brh.de.colaborador
 order by brh.p.nome, brh.c.nome, brh.d.nome
 
 
+******************************************
+-- Atualizar cadastro de colaborador
+******************************************
 
+update brh.colaborador
+set nome = 'Maria Mendonça'
+-- qual campo e valor qr mudar
+where matricula = 'M123' --PK
 
+--sem o where, muda na tabela toda
+
+******************************************
+-- Relatório de cônjuges
+******************************************
+select colaborador as matricula, nome, data_nascimento, parentesco
+from brh.dependente
+where parentesco = 'Cônjuge';
+
+******************************************
+-- Relatório de contatos telefônicos
+******************************************
+select colaborador, numero
+from brh.telefone_colaborador
+where tipo in ('M', 'C')
+order by colaborador, numero desc;
+
+******************************************
+-- Atualizar e-mail de colaborador
+******************************************
+select *
+from brh.email_colaborador
+where colaborador = 'M123' and tipo = 'p'
+
+update brh.email_colaborador
+set email = 'maria.mendonca@email.com'
+where colaborador = 'M123' and tipo = 'p'
