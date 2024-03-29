@@ -66,6 +66,13 @@ inner join brh.dependente d
 on brh.c.matricula = brh.d.colaborador
 order by brh.c.nome, brh.d.nome
 
+*********************************************
+  --Relatório de dependentes menores de idade
+*********************************************
+select colaborador, nome trunc(months_between(sysdate, data_nascimento)/12) as idade
+from brh.dependente
+where trunc (months_between(sysdate, data_nascimento)/12) < 18
+
 ******************************************
 -- Desafio relatório analítico de equipes
 ******************************************
